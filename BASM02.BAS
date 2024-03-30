@@ -26,14 +26,15 @@
 380 '#  with the extension "BIN" in the
 390 '#  file list, change "BAS"to"BIN".
 400 EX$="BAS":'Extention Filter
-410 '################################
-420 VS$="v0.1.20240330-1":'Version
-430 AD=&H1800:'Pattern Name Table Addr
-440 CC=&H3E:'Cursor Char Code(>)
-450 CS=&H20:'Space Char Code( )
-460 KE=&H1B:'ESC Char Code
-470 XM=13
-480 YM=20
+410 'EX$="BIN"
+420 '################################
+430 VS$="v0.1.20240330-1":'Version
+440 AD=&H1800:'Pattern Name Table Addr
+450 CC=&H3E:'Cursor Char Code(>)
+460 CS=&H20:'Space Char Code( )
+470 KE=&H1B:'ESC Char Code
+480 XM=13
+490 YM=20
 
 500 '################################
 510 '# Variable Definitions
@@ -103,14 +104,8 @@
 1600 NEXT I
 1610 '### Executable check
 1620 WK$=RIGHT$(FL$,3)
-1630 IF WK$=EX$ THEN 1650
+1630 IF WK$=EX$ THEN 2700
 1640 GOTO 2000
-1650 '### Execute the file
-1660 VPOKE AN,CS
-1670 WK$="RUN "+FL$
-1680 LOCATE 0,22:PRINT WK$+SPACE$(17);
-1690 RUN FL$
-1700 END
 
 2000 '### Input Button-B Check
 2010 SB=STRIG(3)+STRIG(4)
@@ -119,10 +114,23 @@
 
 2500 '### Input ESC Check
 2510 I$=INKEY$
-2520 IF I$="" THEN 2900:'Without Any-key input
+2520 IF I$="" THEN 2600:'Without Any-key input
 2530 IF ASC(I$)=KE THEN 3000:'With ESC-key input
 
-2900 GOTO 1000
+2600 '### Main Routine END
+2610 GOTO 1000
+
+2700 '################################
+2710 '# Execute the file
+2720 '################################
+2730 VPOKE AN,CS
+2740 WK$="RUN "+FL$
+2750 LOCATE 0,22:PRINT WK$+SPACE$(17);
+2760 RUN FL$
+2800 'Ex) "*.BIN" with BACON
+2810 'BLOAD "BACONLDR.BIN",R
+2820 'BLOAD FL$,R
+2900 END
 
 3000 '################################
 3010 '# Finalize
