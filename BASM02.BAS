@@ -1,7 +1,7 @@
 10 '####################
 20 '# TITLE
 30 '#  MSX FILE LAUNCHER 2
-40 '# Version 0.1.20240330-1
+40 '# Version 0.1.20240331-1
 50 '# LICENSE
 60 '#  These codes are licensed under CC0.
 70 '#  http://creativecommons.org/publicdomain/zero/1.0/deed.ja
@@ -28,7 +28,7 @@
 400 EX$="BAS":'Extention Filter
 410 'EX$="BIN"
 420 '################################
-430 VS$="v0.1.20240330-1":'Version
+430 VS$="v0.1.20240331-1":'Version
 440 AD=&H1800:'Pattern Name Table Addr
 450 CC=&H3E:'Cursor Char Code(>)
 460 CS=&H20:'Space Char Code( )
@@ -136,5 +136,5 @@
 3010 '# Finalize
 3020 '################################
 3110 SCREEN 1,0,0
-3120 LOCATE0,0
+3120 LOCATE 0,0
 3130 NEW
