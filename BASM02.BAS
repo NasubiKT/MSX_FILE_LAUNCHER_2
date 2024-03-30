@@ -48,8 +48,8 @@
 610 YS=0
 620 MC=0
 630 S=0:'Stick
-640 SA=0:'A-Button
-650 SB=0:'B-Button
+640 SA=0:'Button-A
+650 SB=0:'Button-B
 660 FL$="":'Filename
 670 I$=""
 680 WK$=""
