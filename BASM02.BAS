@@ -14,7 +14,6 @@
 140 KEY OFF
 150 DEFINT A-Z
 160 CLS
-
 300 '################################
 310 '# Constant Definitions
 320 '################################
@@ -33,29 +32,27 @@
 450 CC=&H3E:'Cursor Char Code(>)
 460 CS=&H20:'Space Char Code( )
 470 KE=&H1B:'ESC Char Code
-480 XM=13
-490 YM=20
-
+480 XM=13:'Max Col for cursor
+490 YM=20:'Max Row for cursor
 500 '################################
 510 '# Variable Definitions
 520 '################################
-530 I=0
-540 XP=0
-550 YP=0
-560 XW=0
-570 YW=0
+530 I=0:'for Loop
+540 XP=0:'X Pos
+550 YP=0:'Y Pos
+560 XW=0:'X Pos pending
+570 YW=0:'Y Pos pending
 580 AW=0
-590 AN=0
+590 AN=0:'Address of cursor pos
 600 XS=0
 610 YS=0
 620 MC=0
-630 S=0
-640 TA=0
-650 TB=0
-660 FL$=""
+630 S=0:'Stick
+640 SA=0:'A-Button
+650 SB=0:'B-Button
+660 FL$="":'Filename
 670 I$=""
 680 WK$=""
-
 800 '################################
 810 '# Initialize
 820 '################################
@@ -66,7 +63,6 @@
 870 PRINT "RUN:[SPC]/TRG1 QUIT:[ESC]/TRG2";
 880 AN=AD+YP*32+XP
 890 VPOKE AN,CC
-
 1000 '################################
 1010 '# Main Routine
 1020 '################################
@@ -90,36 +86,30 @@
 1270 'Stick input released
 1280 AN=AD+(YP)*32+XP
 1290 VPOKE AN,CC
-
 1500 '### Input Button-A Check
 1510 SA=STRIG(0)+STRIG(1)+STRIG(2)
 1520 IF SA=0 THEN 2000:'Without Button-A input
-1530 '### Get selected filename
-1540 AN=AD+YP*32+XP
-1550 MC=VPEEK(AN+1)
-1560 IF MC=CS THEN 2000
-1570 FL$=""
-1580 FOR I=1 TO 12
-1590  FL$=FL$+CHR$(VPEEK(AN+I))
-1600 NEXT I
-1610 '### Executable check
-1620 WK$=RIGHT$(FL$,3)
-1630 IF WK$=EX$ THEN 2700
-1640 GOTO 2000
-
+1530 'Get selected filename
+1540 MC=VPEEK(AN+1)
+1550 IF MC=CS THEN 2000
+1560 FL$=""
+1570 FOR I=1 TO 12
+1580  FL$=FL$+CHR$(VPEEK(AN+I))
+1590 NEXT I
+1600 'Executable check
+1610 WK$=RIGHT$(FL$,3)
+1620 IF WK$=EX$ THEN 2700
+1630 GOTO 2000
 2000 '### Input Button-B Check
 2010 SB=STRIG(3)+STRIG(4)
 2020 IF SB=0 THEN 2500:'Without Button-B input
 2030 GOTO 3000
-
 2500 '### Input ESC Check
 2510 I$=INKEY$
 2520 IF I$="" THEN 2600:'Without Any-key input
 2530 IF ASC(I$)=KE THEN 3000:'With ESC-key input
-
 2600 '### Main Routine END
 2610 GOTO 1000
-
 2700 '################################
 2710 '# Execute the file
 2720 '################################
@@ -131,7 +121,6 @@
 2810 'BLOAD "BACONLDR.BIN",R
 2820 'BLOAD FL$,R
 2900 END
-
 3000 '################################
 3010 '# Finalize
 3020 '################################
